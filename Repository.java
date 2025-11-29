@@ -6,9 +6,10 @@ public class Repository<T>
     protected Map<String, T> items; // Хранит элементы по ID
     protected String repositoryName;
 
-    public Repository()
+    public Repository(Map<String, T> items, String repositoryName) 
     {
-        items = new HashMap<>();
+        this.items = items;
+        this.repositoryName = repositoryName;
     }
 
     public Map<String, T> getItems()
