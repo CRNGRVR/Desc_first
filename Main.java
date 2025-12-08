@@ -8,11 +8,7 @@ public class Main
     public static void main(String[] args)
     {
         testProduct();
-    }
-
-    public Product mock(String s)
-    {
-        return new Product(s, 0, s, 0);
+        testEmployee();
     }
 
     public static void testProduct()
@@ -52,6 +48,50 @@ public class Main
             }
 
             csvFileProcessor.saveToFile("./test/expensive_products.csv", expensive);
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void testEmployee()
+    {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("IT", "Indys Indesovich", 1, 0));
+        employees.add(new Employee("AI(is not it because its Oleg)", "Oleg", 2, 1));
+        employees.add(new Employee("Sales", "Sanya", 3, 1000));
+        employees.add(new Employee("IT", "a ndrey", 4, 100000));
+
+        CsvFileProcessor<Employee> csvFileProcessor = new CsvFileProcessor<Employee>();
+        csvFileProcessor.saveToFile("./test/employees.csv", employees);
+
+        csvFileProcessor.source = "./test/employees.csv";
+        List<Employee> employeesFromFile = new ArrayList<>();
+        Function<String, Employee> f = (str) -> {
+            String[] strings = new String[4];
+            strings = str.split(";", 0);
+
+            String department = strings[2];
+            int id = Integer.parseInt(strings[0]);
+            String name = strings[1];
+            double salary = Double.parseDouble(strings[3]);   
+            return new Employee(department, name, id, salary);
+        };
+
+        try
+        {
+            employeesFromFile = csvFileProcessor.readFromFile(f);
+
+            List<Employee> it = new ArrayList<>();
+            for (Employee empl : employeesFromFile) {
+                if (empl.department.equals("IT"))
+                {
+                    it.add(empl);
+                }
+            }
+
+            csvFileProcessor.saveToFile("./test/employees_IT.csv", it);
         }
         catch(IOException e)
         {
