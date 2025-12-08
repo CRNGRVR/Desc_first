@@ -1,5 +1,3 @@
-
-
 public class Product implements CsvEntity {
     public int id;
     public String name;
@@ -50,5 +48,4 @@ public class Product implements CsvEntity {
     {
         return this.id+";"+this.name+";"+this.price+";"+this.category;
     }
-
 }

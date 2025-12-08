@@ -13,7 +13,7 @@ public class CsvFileProcessor <T extends CsvEntity> {
         try(BufferedReader br =new BufferedReader(new FileReader(file));)
         {
             String line;
-            while ((line = br.readLine()) !=null) {
+            while ((line = br.readLine()) != null) {
                 lines.add(line);
             }
         }
@@ -36,6 +36,7 @@ public class CsvFileProcessor <T extends CsvEntity> {
             BufferedWriter bw =new BufferedWriter(new FileWriter(destination));
             for (T t : data) {
                 bw.write(t.toCsvRow());
+                bw.write("\n");
             }
             bw.close();
             System.out.println("Save data in "+destination);   
